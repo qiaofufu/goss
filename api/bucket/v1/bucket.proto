@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package api.bucket.v1;
+
+option go_package = "master/api/bucket/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.bucket.v1";
+
+service Bucket {
+  rpc CreateBucket (CreateBucketRequest) returns (CreateBucketReply);
+  rpc UpdateBucket (UpdateBucketRequest) returns (UpdateBucketReply);
+  rpc DeleteBucket (DeleteBucketRequest) returns (DeleteBucketReply);
+  rpc GetBucket (GetBucketRequest) returns (GetBucketReply);
+  rpc ListBucket (ListBucketRequest) returns (ListBucketReply);
+}
+
+message CreateBucketRequest {
+  string name = 1;
+  string description = 2;
+  int64 ownerID = 3;
+}
+message CreateBucketReply {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  int64 ownerID = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
+
+  int32 status = 7;
+  string msg = 8;
+}
+
+message UpdateBucketRequest {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+}
+message UpdateBucketReply {
+  int32 status = 1;
+  string msg = 2;
+}
+
+message DeleteBucketRequest {
+  int64 id = 1;
+  int64 operatorID = 2;
+}
+message DeleteBucketReply {
+  int32 status = 1;
+  string msg = 2;
+}
+
+message GetBucketRequest {
+  int64 id = 1;
+}
+message GetBucketReply {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  int64 ownerID = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
+
+  int32 status = 7;
+  string msg = 8;
+}
+
+message ListBucketRequest {
+  int64 ownerID = 1;
+  int32 page = 2;
+  int32 pageSize = 3;
+}
+message ListBucketReply {
+  repeated BucketInfo buckets = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 pageSize = 4;
+
+  int32 status = 5;
+  string msg = 6;
+}
+
+message BucketInfo {
+  int64 id = 1;
+  string name = 2;
+  string description = 3;
+  int64 ownerID = 4;
+  int64 createdAt = 5;
+  int64 updatedAt = 6;
+}

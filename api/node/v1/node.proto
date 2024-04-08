@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package api.node.v1;
+
+option go_package = "master/api/node/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.node.v1";
+
+service Node {
+	rpc CreateNode (CreateNodeRequest) returns (CreateNodeReply);
+	rpc DeleteNode (DeleteNodeRequest) returns (DeleteNodeReply);
+	rpc GetNode (GetNodeRequest) returns (GetNodeReply);
+	rpc ListNode (ListNodeRequest) returns (ListNodeReply);
+	rpc KeepAlive (KeepAliveRequest) returns (KeepAliveReply);
+}
+
+message CreateNodeRequest {
+	string addr = 1;
+}
+message CreateNodeReply {
+	int64 id = 1;
+	string addr = 2;
+	int32 status = 3;
+	string msg = 4;
+}
+
+message DeleteNodeRequest {
+	int64 id = 1;
+}
+message DeleteNodeReply {
+	int32 status = 1;
+	string msg = 2;
+}
+
+message GetNodeRequest {
+	int64 key = 1;
+	int32 replicas = 2;
+}
+message GetNodeReply {
+	repeated NodeInfo nodes = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message ListNodeRequest {
+	int32 page = 1;
+	int32 size = 2;
+}
+message ListNodeReply {
+	repeated NodeInfo nodes = 1;
+	int64 total = 2;
+	int32 status = 3;
+	string msg = 4;
+}
+
+message KeepAliveRequest {}
+message KeepAliveReply {}
+
+message NodeInfo {
+	int64 id = 1;
+	string addr = 2;
+	int32 status = 3;
+	int64 lastHeartbeat = 4;
+}

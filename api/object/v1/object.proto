@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package api.object.v1;
+
+option go_package = "master/api/object/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.object.v1";
+
+service Object {
+	rpc CreateObject (CreateObjectRequest) returns (CreateObjectReply);
+	rpc UpdateObject (UpdateObjectRequest) returns (UpdateObjectReply);
+	rpc DeleteObject (DeleteObjectRequest) returns (DeleteObjectReply);
+	rpc GetObject (GetObjectRequest) returns (GetObjectReply);
+	rpc ListObject (ListObjectRequest) returns (ListObjectReply);
+}
+
+message CreateObjectRequest {
+	string name = 1;
+	int64 size = 2;
+	int64 bucket_id = 3;
+	string type = 4;
+	int32 replicas = 5;
+}
+message CreateObjectReply {
+	int64 object_id = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message UpdateObjectRequest {
+	int64 object_id = 1;
+	string name = 2;
+	int64 bucket_id = 4;
+	string type = 5;
+}
+message UpdateObjectReply {
+	int32 status = 1;
+	string msg = 2;
+}
+
+message DeleteObjectRequest {
+	int64 object_id = 1;
+}
+message DeleteObjectReply {
+	int32 status = 1;
+	string msg = 2;
+}
+
+message GetObjectRequest {
+	int64 object_id = 1;
+}
+message GetObjectReply {
+	ObjectInfo object = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message ListObjectRequest {
+	int64 bucket_id = 1;
+	int32 page = 2;
+	int32 page_size = 3;
+}
+message ListObjectReply {
+	repeated ObjectInfo objects = 1;
+	int64 total = 2;
+	int32 status = 3;
+	string msg = 4;
+}
+
+message ObjectInfo {
+	int64 object_id = 1;
+	string name = 2;
+	int64 size = 3;
+	int64 bucket_id = 4;
+	string type = 5;
+	int32 replicas = 6;
+	int64 created_at = 7;
+	int64 updated_at = 8;
+}

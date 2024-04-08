@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.acl.v1;
+
+option go_package = "master/api/acl/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.acl.v1";
+
+service Acl {
+	rpc CreateAcl (CreateAclRequest) returns (CreateAclReply);
+	rpc UpdateAcl (UpdateAclRequest) returns (UpdateAclReply);
+	rpc DeleteAcl (DeleteAclRequest) returns (DeleteAclReply);
+	rpc GetAcl (GetAclRequest) returns (GetAclReply);
+	rpc ListAcl (ListAclRequest) returns (ListAclReply);
+}
+
+message CreateAclRequest {}
+message CreateAclReply {}
+
+message UpdateAclRequest {}
+message UpdateAclReply {}
+
+message DeleteAclRequest {}
+message DeleteAclReply {}
+
+message GetAclRequest {}
+message GetAclReply {}
+
+message ListAclRequest {}
+message ListAclReply {}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.location.v1;
+
+option go_package = "master/api/location/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.location.v1";
+
+service Location {
+	rpc CreateLocation (CreateLocationRequest) returns (CreateLocationReply);
+	rpc UpdateLocation (UpdateLocationRequest) returns (UpdateLocationReply);
+	rpc DeleteLocation (DeleteLocationRequest) returns (DeleteLocationReply);
+	rpc GetLocation (GetLocationRequest) returns (GetLocationReply);
+	rpc ListLocation (ListLocationRequest) returns (ListLocationReply);
+}
+
+message CreateLocationRequest {}
+message CreateLocationReply {}
+
+message UpdateLocationRequest {}
+message UpdateLocationReply {}
+
+message DeleteLocationRequest {}
+message DeleteLocationReply {}
+
+message GetLocationRequest {}
+message GetLocationReply {}
+
+message ListLocationRequest {}
+message ListLocationReply {}

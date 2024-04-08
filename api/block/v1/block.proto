@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package api.block.v1;
+
+option go_package = "master/api/block/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.block.v1";
+
+service Block {
+	rpc CreateBlock (CreateBlockRequest) returns (CreateBlockReply);
+	rpc UpdateBlock (UpdateBlockRequest) returns (UpdateBlockReply);
+	rpc DeleteBlock (DeleteBlockRequest) returns (DeleteBlockReply);
+	rpc GetBlock (GetBlockRequest) returns (GetBlockReply);
+	rpc ListBlock (ListBlockRequest) returns (ListBlockReply);
+}
+
+message CreateBlockRequest {}
+message CreateBlockReply {}
+
+message UpdateBlockRequest {}
+message UpdateBlockReply {}
+
+message DeleteBlockRequest {}
+message DeleteBlockReply {}
+
+message GetBlockRequest {}
+message GetBlockReply {}
+
+message ListBlockRequest {}
+message ListBlockReply {}
