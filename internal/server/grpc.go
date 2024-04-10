@@ -1,6 +1,7 @@
 package server
 
 import (
+	blockAPI "master/api/block/v1"
 	bucketAPI "master/api/bucket/v1"
 	nodeAPI "master/api/node/v1"
 	objectAPI "master/api/object/v1"
@@ -18,6 +19,7 @@ func NewGRPCServer(
 	bucket *service.BucketService,
 	node *service.NodeService,
 	object *service.ObjectService,
+	block *service.BlockService,
 	logger log.Logger,
 ) *grpc.Server {
 	var opts = []grpc.ServerOption{
@@ -38,5 +40,6 @@ func NewGRPCServer(
 	bucketAPI.RegisterBucketServer(srv, bucket)
 	nodeAPI.RegisterNodeServer(srv, node)
 	objectAPI.RegisterObjectServer(srv, object)
+	blockAPI.RegisterBlockServer(srv, block)
 	return srv
 }

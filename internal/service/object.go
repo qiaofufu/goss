@@ -29,7 +29,7 @@ func (s *ObjectService) CreateObject(ctx context.Context, req *pb.CreateObjectRe
 	}, nil
 }
 func (s *ObjectService) UpdateObject(ctx context.Context, req *pb.UpdateObjectRequest) (*pb.UpdateObjectReply, error) {
-	_, err := s.uc.UpdateObject(ctx, req.ObjectId, req.Name, req.BucketId, req.Type)
+	err := s.uc.UpdateObject(ctx, req.ObjectId, req.Name, req.BucketId, req.Type)
 	if err != nil {
 		return &pb.UpdateObjectReply{
 			Status: 1,
