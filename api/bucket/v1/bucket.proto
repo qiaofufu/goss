@@ -35,6 +35,7 @@ message UpdateBucketRequest {
   int64 id = 1;
   string name = 2;
   string description = 3;
+  int64 operator_id = 4;
 }
 message UpdateBucketReply {
   int32 status = 1;
@@ -43,7 +44,7 @@ message UpdateBucketReply {
 
 message DeleteBucketRequest {
   int64 id = 1;
-  int64 operatorID = 2;
+  int64 operator_id = 2;
 }
 message DeleteBucketReply {
   int32 status = 1;
@@ -52,6 +53,7 @@ message DeleteBucketReply {
 
 message GetBucketRequest {
   int64 id = 1;
+  int64 operator_id = 2;
 }
 message GetBucketReply {
   int64 id = 1;
@@ -68,14 +70,12 @@ message GetBucketReply {
 message ListBucketRequest {
   int64 ownerID = 1;
   int32 page = 2;
-  int32 pageSize = 3;
+  int32 page_size = 3;
+  int64 operator_id = 4;
 }
 message ListBucketReply {
   repeated BucketInfo buckets = 1;
   int32 total = 2;
-  int32 page = 3;
-  int32 pageSize = 4;
-
   int32 status = 5;
   string msg = 6;
 }

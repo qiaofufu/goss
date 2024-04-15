@@ -42,7 +42,10 @@ func wireApp(confServer *conf.Server, confData *conf.Data, node *conf.Node, hash
 	blockRepo := data.NewBlockRepo(dataData, logger, uniqueIDGenerator)
 	blockUsecase := biz.NewBlockUsecase(blockRepo, logger)
 	blockService := service.NewBlockService(blockUsecase)
-	grpcServer := server.NewGRPCServer(confServer, bucketService, nodeService, objectService, blockService, logger)
+	aclRepo := data.NewAclRepo(dataData, logger, uniqueIDGenerator)
+	aclUsecase := biz.NewAclUsecase(aclRepo, logger)
+	aclService := service.NewAclService(aclUsecase, logger)
+	grpcServer := server.NewGRPCServer(confServer, bucketService, nodeService, objectService, blockService, aclService, logger)
 	app := newApp(logger, grpcServer)
 	return app, func() {
 		cleanup()

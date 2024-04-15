@@ -10,21 +10,74 @@ service Acl {
 	rpc CreateAcl (CreateAclRequest) returns (CreateAclReply);
 	rpc UpdateAcl (UpdateAclRequest) returns (UpdateAclReply);
 	rpc DeleteAcl (DeleteAclRequest) returns (DeleteAclReply);
-	rpc GetAcl (GetAclRequest) returns (GetAclReply);
 	rpc ListAcl (ListAclRequest) returns (ListAclReply);
 }
 
-message CreateAclRequest {}
-message CreateAclReply {}
+message CreateAclRequest {
+		int64 resource_id = 1;
+		int32 resource_type = 2;
+		int64 target_id = 3;
+		int32 target_type = 4;
+		int32 permission = 5;
+		int64 operator_id = 6;
+}
+message CreateAclReply {
+		int64 id = 1;
+		int64 resource_id = 2;
+		int64 target_id = 3;
+		int32 target_type = 4;
+		int32 permission = 5;
+		int64 created_at = 6;
+		int64 updated_at = 7;
+		int32 status = 8;
+		string msg = 9;
+}
 
-message UpdateAclRequest {}
-message UpdateAclReply {}
+message UpdateAclRequest {
+		int64 id = 1;
+		int32 permission = 2;
+		int64 operator_id = 3;
+}
+message UpdateAclReply {
+	int32 status = 1;
+	string msg = 2;
+}
 
-message DeleteAclRequest {}
-message DeleteAclReply {}
+message DeleteAclRequest {
+	int64 id = 1;
+	int64 operator_id = 2;
+}
+message DeleteAclReply {
+	int32 status = 1;
+	string msg = 2;
+}
 
-message GetAclRequest {}
-message GetAclReply {}
+message ListAclRequest {
+	int64 resource_id = 1;
+	int64 operator_id = 2;
+	int32 page = 3;
+	int32 page_size = 4;
+	int32 resource_type = 5;
+}
+message ListAclReply {
+	repeated AclInfo acl_list = 1;
+	int32 status = 2;
+	string msg = 3;
+	int64 total = 4;
+}
 
-message ListAclRequest {}
-message ListAclReply {}
+message AclInfo {
+	int64 id = 1;
+	int64 resource_id = 2;
+	int64 target_id = 3;
+	int32 target_type = 4;
+	int32 permission = 5;
+	int64 created_at = 6;
+	int64 updated_at = 7;
+}
+
+enum ResourceType {
+	RESOURCE_TYPE_UNKNOWN = 0;
+	RESOURCE_TYPE_BUCKET = 1;
+	RESOURCE_TYPE_OBJECT = 2;
+}

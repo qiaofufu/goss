@@ -17,6 +17,7 @@ func NewObjectService(uc *biz.ObjectUsecase) *ObjectService {
 }
 
 func (s *ObjectService) CreateObject(ctx context.Context, req *pb.CreateObjectRequest) (*pb.CreateObjectReply, error) {
+
 	object, err := s.uc.CreateObject(ctx, req.Name, req.Size, req.BucketId, req.Type, int(req.Replicas))
 	if err != nil {
 		return &pb.CreateObjectReply{

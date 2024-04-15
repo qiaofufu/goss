@@ -16,6 +16,7 @@ service Node {
 
 message CreateNodeRequest {
 	string addr = 1;
+
 }
 message CreateNodeReply {
 	int64 id = 1;
