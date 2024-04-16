@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package api.user;
+
+option go_package = "master/api/user;user";
+option java_multiple_files = true;
+option java_package = "api.user";
+
+service User {
+	rpc CreateUser (CreateUserRequest) returns (CreateUserReply);
+	rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply);
+	rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply);
+	rpc GetUser (GetUserRequest) returns (GetUserReply);
+	rpc ListUser (ListUserRequest) returns (ListUserReply);
+}
+
+message CreateUserRequest {
+	string username = 1;
+	string password = 2;
+	string email = 3;
+	repeated string roles = 5;
+	int64 operator_id = 6;
+}
+message CreateUserReply {
+	int64 id = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message UpdateUserRequest {
+	int64 id = 1;
+	string username = 2;
+	string password = 3;
+	string email = 4;
+	bool active = 5;
+	repeated string roles = 6;
+	int64 operator_id = 7;
+}
+message UpdateUserReply {
+	int32 status = 1;
+	string msg = 2;
+}
+
+message DeleteUserRequest {
+	int64 id = 1;
+	int64 operator_id = 2;
+}
+message DeleteUserReply {
+	int32 status = 1;
+	string msg = 2;
+}
+
+message GetUserRequest {
+	int64 id = 1;
+	int64 operator_id = 2;
+}
+message GetUserReply {
+	UserInfo user = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message ListUserRequest {
+	int32 page = 1;
+	int32 size = 2;
+	int64 operator_id = 3;
+}
+message ListUserReply {
+	repeated UserInfo users = 1;
+	int32 status = 2;
+	string msg = 3;
+	int64 total = 4;
+}
+
+message UserInfo {
+	int64 id = 1;
+	string username = 2;
+	string email = 3;
+	repeated string role = 4;
+	int64 created_at = 5;
+	int64 updated_at = 6;
+}
