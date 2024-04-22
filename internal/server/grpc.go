@@ -4,6 +4,7 @@ import (
 	aclAPI "master/api/acl/v1"
 	blockAPI "master/api/block/v1"
 	bucketAPI "master/api/bucket/v1"
+	locationAPI "master/api/location/v1"
 	nodeAPI "master/api/node/v1"
 	objectAPI "master/api/object/v1"
 	userAPI "master/api/user/v1"
@@ -24,6 +25,7 @@ func NewGRPCServer(
 	block *service.BlockService,
 	aclService *service.AclService,
 	userService *service.UserService,
+	location *service.LocationService,
 	logger log.Logger,
 ) *grpc.Server {
 	var opts = []grpc.ServerOption{
@@ -47,5 +49,6 @@ func NewGRPCServer(
 	blockAPI.RegisterBlockServer(srv, block)
 	aclAPI.RegisterAclServer(srv, aclService)
 	userAPI.RegisterUserServer(srv, userService)
+	locationAPI.RegisterLocationServer(srv, location)
 	return srv
 }

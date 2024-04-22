@@ -8,23 +8,44 @@ option java_package = "api.location.v1";
 
 service Location {
 	rpc CreateLocation (CreateLocationRequest) returns (CreateLocationReply);
-	rpc UpdateLocation (UpdateLocationRequest) returns (UpdateLocationReply);
 	rpc DeleteLocation (DeleteLocationRequest) returns (DeleteLocationReply);
-	rpc GetLocation (GetLocationRequest) returns (GetLocationReply);
 	rpc ListLocation (ListLocationRequest) returns (ListLocationReply);
 }
 
-message CreateLocationRequest {}
-message CreateLocationReply {}
+message CreateLocationRequest {
+	int32 type = 1;
+	int64 referID = 2;
+	int64 nodeID = 3;
+}
+message CreateLocationReply {
+	int32 status = 1;
+	string msg = 2;
+}
 
-message UpdateLocationRequest {}
-message UpdateLocationReply {}
 
-message DeleteLocationRequest {}
-message DeleteLocationReply {}
+message DeleteLocationRequest {
+	int32 type = 1;
+	int64 referID = 2;
+}
+message DeleteLocationReply {
+	int32 status = 1;
+	string msg = 2;
+}
 
-message GetLocationRequest {}
-message GetLocationReply {}
 
-message ListLocationRequest {}
-message ListLocationReply {}
+message ListLocationRequest {
+	int32 type = 1;
+	int64 referID = 2;
+}
+message ListLocationReply {
+	repeated LocationInfo locations = 1;
+	int32 status = 2;
+	string msg = 3;
+}
+
+message LocationInfo {
+	int32 type = 1;
+	int64 referID = 2;
+	int64 nodeID = 3;
+	int32 port = 4;
+}
