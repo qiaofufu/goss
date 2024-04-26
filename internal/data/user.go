@@ -24,6 +24,18 @@ type userRepo struct {
 	idGen UniqueIDGenerator
 }
 
+func (u *userRepo) VerifyUserLogin(ctx context.Context, username, password string) (*biz.User, error) {
+	user, err := u.GetUserByUsername(ctx, username)
+	if err != nil {
+		return nil, err
+	}
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func NewUserRepo(data *Data, id UniqueIDGenerator) biz.UserRepo {
 	return &userRepo{
 		data:  data,
@@ -75,6 +87,22 @@ func (u *userRepo) UpdateUser(ctx context.Context, user *biz.User) error {
 func (u *userRepo) GetUserByID(ctx context.Context, id int64) (*biz.User, error) {
 	var user = &User{}
 	err := u.data.db.Where("uid = ?", id).First(user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &biz.User{
+		Id:        user.Uid,
+		Username:  user.Username,
+		Email:     user.Email,
+		CreatedAt: user.CreatedAt.UnixMilli(),
+		UpdatedAt: user.UpdatedAt.UnixMilli(),
+		Active:    user.Active,
+	}, nil
+}
+
+func (u *userRepo) GetUserByUsername(ctx context.Context, username string) (*biz.User, error) {
+	var user = &User{}
+	err := u.data.db.Where("username = ?", username).First(&user).Error
 	if err != nil {
 		return nil, err
 	}

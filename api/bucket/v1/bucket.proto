@@ -1,17 +1,40 @@
 syntax = "proto3";
 
 package api.bucket.v1;
-
+import "google/api/annotations.proto";
 option go_package = "master/api/bucket/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.bucket.v1";
 
 service Bucket {
-  rpc CreateBucket (CreateBucketRequest) returns (CreateBucketReply);
-  rpc UpdateBucket (UpdateBucketRequest) returns (UpdateBucketReply);
-  rpc DeleteBucket (DeleteBucketRequest) returns (DeleteBucketReply);
-  rpc GetBucket (GetBucketRequest) returns (GetBucketReply);
-  rpc ListBucket (ListBucketRequest) returns (ListBucketReply);
+  rpc CreateBucket (CreateBucketRequest) returns (CreateBucketReply) {
+    option (google.api.http) = {
+      post: "/v1/bucket"
+      body: "*"
+    };
+  }
+  rpc UpdateBucket (UpdateBucketRequest) returns (UpdateBucketReply) {
+    option (google.api.http) = {
+      put: "/v1/bucket"
+      body: "*"
+    };
+  }
+  rpc DeleteBucket (DeleteBucketRequest) returns (DeleteBucketReply) {
+    option (google.api.http) = {
+      delete: "/v1/bucket"
+      body: "*"
+    };
+  }
+  rpc GetBucket (GetBucketRequest) returns (GetBucketReply) {
+    option (google.api.http) = {
+      get: "/v1/bucket/{id}"
+    };
+  }
+  rpc ListBucket (ListBucketRequest) returns (ListBucketReply) {
+    option (google.api.http) = {
+      get: "/v1/bucket"
+    };
+  }
 }
 
 message CreateBucketRequest {

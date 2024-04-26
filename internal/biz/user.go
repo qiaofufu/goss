@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
+	"master/third_party/jwt"
 )
 
 type User struct {
@@ -23,6 +24,8 @@ type UserRepo interface {
 	GetUserByID(ctx context.Context, id int64) (*User, error)
 	ListUser(ctx context.Context, page int, size int) ([]*User, int64, error)
 	DeleteUser(ctx context.Context, id int64) error
+	GetUserByUsername(ctx context.Context, username string) (*User, error)
+	VerifyUserLogin(ctx context.Context, username, password string) (*User, error)
 }
 
 type UserUsecase struct {
@@ -62,6 +65,19 @@ func (uc *UserUsecase) GetUserByID(ctx context.Context, id int64, operatorID int
 		return nil, fmt.Errorf("UserUsecase.GetUserByID: %w", err)
 	}
 	return user, nil
+}
+
+func (uc *UserUsecase) Login(ctx context.Context, username string, password string) (string, error) {
+	user, err := uc.repo.VerifyUserLogin(ctx, username, password)
+	if err != nil {
+		return "", fmt.Errorf("UserUsecase.Login: %w", err)
+	}
+	// TODO: generate token
+	token, err := jwt.GenToken(user.Id)
+	if err != nil {
+		return "", fmt.Errorf("UserUsecase.Login: %w", err)
+	}
+	return token, nil
 }
 
 func (uc *UserUsecase) ListUser(ctx context.Context, page, size int, operatorID int64) ([]*User, int64, error) {

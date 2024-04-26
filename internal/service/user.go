@@ -5,12 +5,30 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"master/api/user/v1"
 	"master/internal/biz"
+	"time"
 )
 
 type UserService struct {
 	v1.UnimplementedUserServer
 	uc  *biz.UserUsecase
 	log *log.Helper
+}
+
+func (s *UserService) Login(ctx context.Context, request *v1.LoginRequest) (*v1.LoginReply, error) {
+	token, err := s.uc.Login(ctx, request.Username, request.Password)
+	if err != nil {
+		s.log.Errorf("Service Login Error: %v", err)
+		return &user.LoginReply{
+			Status: 1,
+			Msg:    err.Error(),
+		}, nil
+	}
+	return &user.LoginReply{
+		Status:    0,
+		Msg:       "Success",
+		Token:     token,
+		ExpiredAt: time.Now().Add(time.Hour * 24 * 30).Unix(),
+	}, nil
 }
 
 func NewUserService(uc *biz.UserUsecase, logger log.Logger) *UserService {
